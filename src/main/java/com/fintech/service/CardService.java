@@ -4,6 +4,7 @@ import com.fintech.entity.CardEntity;
 import com.fintech.entity.UserAccountEntity;
 import com.fintech.exception.NotFoundException;
 import com.fintech.repository.CardRepository;
+import com.fintech.repository.UserAccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ public class CardService {
     private static final String ID_NOT_FOUND = "Id not found";
 
     private final CardRepository cardRepository;
+    private final UserAccountRepository userAccountRepository;
     private UserAccountEntity userAccountEntity;
     private final UserAccountService userAccountService;
 
@@ -27,6 +29,7 @@ public class CardService {
         }
         var cardOwner = userAccountService.getByCpf(cpf);
         List<CardEntity> cardEntities = new ArrayList<>();
+        cardEntity.setUser(cardOwner.getId());
         cardEntities.add(cardEntity);
         return cardRepository.save(cardEntity);
     }
@@ -37,6 +40,14 @@ public class CardService {
 
     public CardEntity getByNumber(String number){
         return cardRepository.findByNumber(number).orElseThrow(() -> new NotFoundException(NUMBER_NOT_FOUND));
+    }
+
+    public List<CardEntity> getCards(Long id){
+        var card = cardRepository.findAllByUser(id);
+        if (!card.isEmpty()) {
+            return card;
+        }
+        throw new RuntimeException("Id of user card not found");
     }
 
     public void deleteById(Long id){

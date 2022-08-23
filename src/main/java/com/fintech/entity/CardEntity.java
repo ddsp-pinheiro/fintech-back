@@ -27,6 +27,7 @@ public class CardEntity {
     private String number;
 
     @Column
+    @Enumerated(EnumType.STRING)
     private CardType type;
 
     @Column
@@ -35,9 +36,10 @@ public class CardEntity {
 
     @Column(name="debit")
     @OneToMany
-    @JoinTable(name="expenses_entity",
-            joinColumns={@JoinColumn(name="id_expenses")},
-            inverseJoinColumns={@JoinColumn(name="debit")})
+    @JoinColumn(name="id_card")
     @Builder.Default
     private List<ExpensesEntity> debit = null;
+
+    @Column(name = "id_user")
+    private Long user;
 }

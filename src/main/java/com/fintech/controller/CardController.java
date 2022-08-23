@@ -1,20 +1,17 @@
 package com.fintech.controller;
 
 import com.fintech.entity.CardEntity;
-import com.fintech.entity.UserAccountEntity;
 import com.fintech.mapper.CardMapper;
-import com.fintech.mapper.UserMapper;
 import com.fintech.response.CardResponse;
-import com.fintech.response.UserResponse;
 import com.fintech.resquest.CardRequest;
 import com.fintech.service.CardService;
-import com.fintech.service.UserAccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -23,11 +20,10 @@ import java.util.List;
 public class CardController {
 
     private final CardMapper cardMapper;
-    private final UserMapper userMapper;
     private final CardService cardService;
-    private final UserAccountService userAccountService;
 
     private static final String CPF = "x-cpf";
+    private static final String ID = "x-id";
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -36,10 +32,18 @@ public class CardController {
         return cardMapper.toResponse(entity);
     }
 
-    @GetMapping("/{cpf}")
+    @GetMapping("/{cardNumber}")
     @ResponseStatus(HttpStatus.OK)
     public CardResponse getCardByNumber(@PathVariable String cardNumber){
         CardEntity entity = cardService.getByNumber(cardNumber);
         return cardMapper.toResponse(entity);
+    }
+
+    @GetMapping("myCards")
+    @ResponseStatus(HttpStatus.OK)
+    public List<CardEntity> getAllCardFromUser(@RequestHeader(ID) Long id){
+        List<CardEntity> entity = cardService.getCards(id);
+
+        return entity;
     }
 }

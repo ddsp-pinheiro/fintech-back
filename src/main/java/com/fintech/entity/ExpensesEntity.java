@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "expenses_entity")
@@ -34,7 +35,6 @@ public class ExpensesEntity {
     private PaymentStatus status;
 
     @OneToOne
-    @JoinTable(name="payment_recipient_entity",
-            joinColumns={@JoinColumn(name="id_expenses")})
+    @JoinColumn(name="id_expenses")
     private PaymentRecipient paymentRecipient;
 }

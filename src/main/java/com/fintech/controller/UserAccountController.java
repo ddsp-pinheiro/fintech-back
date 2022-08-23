@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Random;
 
 @RestController
 @RequestMapping("/fintech")
@@ -19,6 +18,7 @@ public class UserAccountController {
 
     private final UserAccountService userAccountService;
     private final UserMapper userMapper;
+
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -33,4 +33,6 @@ public class UserAccountController {
         UserAccountEntity entity = userAccountService.getByCpf(cpf);
         return userMapper.toResponse(entity);
     }
+
+
 }

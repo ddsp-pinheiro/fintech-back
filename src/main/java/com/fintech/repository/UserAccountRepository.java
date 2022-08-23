@@ -9,5 +9,5 @@ import java.util.Optional;
 @Repository
 public interface UserAccountRepository extends JpaRepository<UserAccountEntity,Long> {
     Optional<UserAccountEntity> findById(Long id);
-    Optional<UserAccountEntity> findByCpf(Long accountNumber);
+    Optional<UserAccountEntity> findByCpf(Long cpf);
 }

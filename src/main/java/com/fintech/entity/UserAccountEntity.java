@@ -1,12 +1,9 @@
 package com.fintech.entity;
 
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,10 +30,8 @@ public class UserAccountEntity {
     private Long cpf;
 
     @Column(name="cards")
-    @OneToMany(cascade = CascadeType.REMOVE)
-    @JoinTable(name="card_entity",
-            joinColumns={@JoinColumn(name="id_card")},
-            inverseJoinColumns={@JoinColumn(name="cards")})
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="id_user")
     @Builder.Default
     private List<CardEntity> cards = new ArrayList<>();
 

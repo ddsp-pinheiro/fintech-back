@@ -19,7 +19,7 @@ public class UserAccountService {
         if (userAccountRepository.findByCpf(userAccountEntity.getCpf()).isPresent()){
             throw new DuplicateKeyException("This user already exists");
         }
-        if (!verifyCpf(userAccountEntity.getCpf())){
+        if (Boolean.FALSE.equals(verifyCpf(userAccountEntity.getCpf()))){
             throw new RuntimeException("The cpf entered is invalid");
         }
         return userAccountRepository.save(userAccountEntity);
@@ -29,11 +29,11 @@ public class UserAccountService {
         return cpf > 10000000000L && cpf < 99999999999L;
     }
 
-    public UserAccountEntity updateUser(UserAccountEntity userAccountEntity){
-        return userAccountRepository.save(userAccountEntity);
-    }
-
     public UserAccountEntity getByCpf(Long cpf){
         return userAccountRepository.findByCpf(cpf).orElseThrow(() -> new NotFoundException(CPF_NOT_FOUND));
     }
+
+
+
+
 }

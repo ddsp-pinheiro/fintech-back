@@ -2,6 +2,7 @@ package com.fintech.response;
 
 import com.fintech.CardType;
 import com.fintech.entity.ExpensesEntity;
+import com.fintech.entity.UserAccountEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,6 +17,7 @@ import java.util.List;
 public class CardResponse {
 
     private Long id;
+//    private UserAccountEntity userAccountEntity;
     private String name;
     private String number;
     private CardType type;
